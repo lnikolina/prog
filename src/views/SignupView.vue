@@ -28,10 +28,11 @@
     </form>
 </template>
 
+
 <script>
 
 import { firebase } from '@/firebase';
-import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';  
+//import { getAuth, createWithEmailAndPassword } from 'firebase/auth';
 export default {
     name: "Signup",
     data () { //funkcija
@@ -52,7 +53,7 @@ export default {
             .catch(function(error) {
               console.error('Došlo je do greške!', error);
             });
-            console.log('Nastavak');
+          console.log('Nastavak');
         },
     },
 };
