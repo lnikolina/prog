@@ -35,7 +35,14 @@ export default {
   methods: {
     login(){
       console.log(this.username + ", you are successfully logged in!");
-      this.$router.replace({ name:'home'})
+      firebase
+      .auth()
+      .singInWithEmailAndPassworg(this.username, this.password)
+      .then(function(result){
+        console.log('Uspješna prijava', result);
+      }).catch(function(e){
+        console.error('Greška',e);
+      });
     },
   },
 };

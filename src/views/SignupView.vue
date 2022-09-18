@@ -21,7 +21,7 @@
             <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
 
             <div class="clearfix">
-            <button type="button" class="cancelbtn">Cancel</button>
+            
             <button type="button" @click="signup"  class="signupbtn">Sign Up</button>
             </div>
         </div>
@@ -31,8 +31,9 @@
 
 <script>
 
-import { firebase } from '@/firebase';
-//import { getAuth, createWithEmailAndPassword } from 'firebase/auth';
+import { firebase } from '../firebase';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 export default {
     name: "Signup",
     data () { //funkcija
@@ -42,19 +43,19 @@ export default {
         passwordRepeat: "",
       };
     },
-    methods: {
-        signup() {
-          firebase
-            .auth()
-            .createUserWithEmailAndPassword(this.username, this.password)
-            .then(function() {
-              console.log('Uspješna registracija!');
-            })
-            .catch(function(error) {
-              console.error('Došlo je do greške!', error);
-            });
-          console.log('Nastavak');
-        },
+    methods: { //objekt
+      signup() { //kljuc
+        firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.auth, this.username, this.password)
+        .then(function() {
+          console.log('Uspješna registracija!');
+        })
+        .catch(function(error) {
+          console.error('Došlo je do greške!', error);
+        });
+        console.log('Nastavak');
+      },
     },
 };
 </script>
