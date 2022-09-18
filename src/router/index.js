@@ -1,11 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createRouter } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Croppa from 'vue-croppa';
-import 'vue-croppa/dist/vue-croppa.css';
-
-Vue.use(Croppa);
-Vue.use(VueRouter)
 
 const routes = [
   {
@@ -14,36 +8,25 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/activities',
-    name: 'activities',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ActivitiesView.vue')
-  },
-  {
-    path: '/postimage',
-    name: 'postimage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PostImageView.vue')
-  },
-  {
-    path: '/attractions',
-    name: 'attractions',
-    component: () => import(/* webpackChunkName: "about" */ '../views/attractionsView.vue')
+    path: '/login',
+    name: 'login',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/LoginView.vue')
   },
   {
     path: '/signup',
     name: 'signup',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/SignupView.vue')
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/LoginView.vue')
-  },
-
+  }
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  
   routes
 })
 

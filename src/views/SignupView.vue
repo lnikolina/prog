@@ -1,133 +1,79 @@
 <template>
-    <form action="action_page.php" style=" border:1px solid #ccc">
-        <div class="container">
-            <h1>Sign Up</h1>
-            <p>Please fill in this form to create an account.</p>
-            <hr>
-
-            <label for="email"><b>Email</b></label>
-            <input type="text" v-model="username" placeholder="Enter Email" name="email" required>
-
-            <label for="psw"><b>Password</b></label>
-            <input type="password" v-model="password" placeholder="Enter Password" name="psw" required>
-
-            <label for="psw-repeat"><b>Repeat Password</b></label>
-            <input type="password" v-model="passwordRepeat" placeholder="Repeat Password" name="psw-repeat" required>
-
-            <label>
-            <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-            </label>
-
-            <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-
-            <div class="clearfix">
-            
-            <button type="button" @click="signup"  class="signupbtn">Sign Up</button>
-            </div>
-        </div>
-    </form>
+ <div class="about">
+ <h1>This is a signup page</h1>
+ <div class="container">
+ <div class="row">
+ <div class="col-sm"></div>
+ <div class="col-sm">
+ <form>
+ <div class="form-group">
+ <label for="exampleInputEmail1">Email address</label>
+    <input 
+    type="email" 
+    v-model="username"
+    class="form-control"
+    id="exampleInputEmail1" 
+    aria-describedby="emailHelp" 
+    placeholder="Enter
+    email" />
+ <small id="emailHelp" class="form-text text-muted" >We'll
+never share your email with anyone else.</small>
+ </div>
+ <div class="form-group">
+ <label for="exampleInputPassword1">Password</label>
+ <input 
+    type="password" 
+    v-model="password" 
+    class="form-control"
+    id="exampleInputPassword1" 
+    placeholder="Password" />
+ </div>
+ <div class="form-group">
+ <label for="exampleInputPassword1">Repeat password</label>
+ <input 
+    type="password" 
+    v-model='repeatPassword' 
+    class="form-control"
+    id="exampleInputPassword2" 
+    placeholder="Password" />
+ </div>
+ <button type="button" @click="signup" class="btn btn-primary">Submit</button>
+ </form>
+ </div>
+ <div class="col-sm"></div>
+ </div>
+ </div>
+ </div>
 </template>
 
 
 <script>
-
-import { firebase } from '../firebase';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
+import app from "@/firebase";
+import { Firestore } from '@firebase/firestore';
 export default {
-    name: "Signup",
-    data () { //funkcija
-      return {
-        username:"",
-        password:"",
-        passwordRepeat: "",
-      };
-    },
-    methods: { //objekt
-      signup() { //kljuc
-        firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.auth, this.username, this.password)
-        .then(function() {
-          console.log('Uspješna registracija!');
-        })
-        .catch(function(error) {
-          console.error('Došlo je do greške!', error);
-        });
-        console.log('Nastavak');
-      },
+    name: "signup",
+    data(){
+        return {
+            username: "",
+            password: '',
+            repeatPassword: ''
+        };
+    },        
+    
+    methods: {
+        signup(){
+           const auth=getAuth();
+            
+            createUserWithEmailAndPassword(auth, this.username, this.password)
+            .then(() => console.log("Uspješna registracija: " , this.username))
+            .catch((error) =>
+                alert("lozinka prekratka - mora biti barem 6 znakova"))
+                      ;  
+         
+           
+            console.log('nastavak');
+        },
     },
 };
 </script>
-
-
-<style>
-* {box-sizing: border-box}
-
-/* Full-width input fields */
-  input[type=text], input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
-
-/* Set a style for all buttons */
-button {
-  background-color: #04AA6D;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-button:hover {
-  opacity:1;
-}
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-  padding: 14px 20px;
-  background-color: #f44336;
-}
-
-/* Float cancel and signup buttons and add an equal width */
-.cancelbtn, .signupbtn {
-  float: left;
-  width: 50%;
-}
-
-/* Add padding to container elements */
-.container {
-  padding: 16px;
-}
-
-/* Clear floats */
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* Change styles for cancel button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-  .cancelbtn, .signupbtn {
-    width: 100%;
-  }
-}
-</style>
