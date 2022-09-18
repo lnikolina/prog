@@ -29,22 +29,32 @@
 </template>
 
 <script>
+
+import { firebase } from '@/firebase';
+import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';  
 export default {
-  name: "Signup",
-  data () { //funkcija
-    return {
-      username:"",
-      password:"",
-      passwordRepeat: "",
-    };
-  },
-  methods: {
-    signup() {
-      console.log(this.username + ", you are successfully registered");
-      this.$router.replace({ name:'home'})
-      
+    name: "Signup",
+    data () { //funkcija
+      return {
+        username:"",
+        password:"",
+        passwordRepeat: "",
+      };
     },
-  },
+    methods: {
+        signup() {
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(this.username, this.password)
+            .then(function() {
+              console.log('Uspješna registracija!');
+            })
+            .catch(function(error) {
+              console.error('Došlo je do greške!', error);
+            });
+            console.log('Nastavak');
+        },
+    },
 };
 </script>
 
